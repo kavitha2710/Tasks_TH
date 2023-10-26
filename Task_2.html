@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+        }
+
+        #timer {
+            margin:80px;
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+        }
+
+        #controls {
+            margin: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">00:00:00</div>
+    <div id="controls">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <script>
+        let timerInterval;
+        let timeInSeconds = 3600; // Change this to your desired countdown time in seconds
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+            document.getElementById("timer").textContent = formatTime(timeInSeconds);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timeInSeconds = 3600; // Reset the timer to your desired countdown time
+            document.getElementById("timer").textContent = formatTime(timeInSeconds);
+        }
+
+        function updateTimer() {
+            timeInSeconds--;
+            document.getElementById("timer").textContent = formatTime(timeInSeconds);
+            if (timeInSeconds <= 0) {
+                clearInterval(timerInterval);
+            }
+        }
+
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const remainingSeconds = seconds % 60;
+            return (
+                String(hours).padStart(2, "0") +
+                ":" +
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(remainingSeconds).padStart(2, "0")
+            );
+        }
+    </script>
+</body>
+</html>
